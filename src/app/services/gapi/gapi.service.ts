@@ -12,12 +12,14 @@ export class GapiService {
 	private googleAuth: any;
 
 	private changesToken: string;
+	private filesToken: string;
 
 	private data: Observable<any>;
 
   constructor() { 
 
   	//Asignar los valores para inicializacion del cliente del api
+
 	this.apiKey = 'AIzaSyAEdrFiBDNK-HVnj5qxU7gMNcN58zpkR_c';
 	this.clientId = '774012725108-tnnusra4io75rsiih2jsp8ukch4j1auu.apps.googleusercontent.com';
 	this.scope = 'https://www.googleapis.com/auth/drive';
@@ -90,22 +92,78 @@ export class GapiService {
 	getChanges(): Observable<any>{
 
 		let _self = this;
-
 		
-		if(!_self.changesToken || _self.changesToken == ""){
+		if(!this.changesToken || this.changesToken == ""){
+
 			return new Observable((observer) =>{
 
 				this.gapi.client.drive.files.list({fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5})
 				.then((res) =>{
-							
+
+					_self.filesToken = res.nextPageToken;
+
+				    observer.next(res);
+				    observer.complete()
+				});
+			});
+
+		}
+		else{
+
+			return new Observable((observer) =>{
+
+				this.gapi.client.drive.files.list({pageToken: _self.filesToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5})
+				.then((res) =>{
+
+					_self.filesToken = res.nextPageToken;
+
+				    observer.next(res);
+				    observer.complete()
+				});
+			});
+
+		}
+	}
+
+
+	getFilesList(): Observable<any>{
+
+
+		let _self = this;
+
+		if(!this.filesToken || this.filesToken == ""){
+
+			return new Observable((observer) =>{
+
+				this.gapi.client.drive.files.list({fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType', orderBy: "modifiedTime desc"})
+				.then((res) =>{
+
 					_self.changesToken = res.nextPageToken;
 
 				    observer.next(res);
 				    observer.complete()
 				});
 			});
+
+		}
+		else{
+
+			return new Observable((observer) =>{
+
+				this.gapi.client.drive.files.list({pageToken: _self.changesToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType', orderBy: "modifiedTime desc"})
+				.then((res) =>{
+
+					_self.changesToken = res.nextPageToken;
+
+				    observer.next(res);
+				    observer.complete()
+				});
+			});
+
 		}
 
+
 	}
+
 
 }
