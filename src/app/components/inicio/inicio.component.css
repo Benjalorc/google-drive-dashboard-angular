@@ -7,3 +7,25 @@
 	position: fixed;
 	top: 75%;
 }
+
+.profilePic{
+	border-radius: 50%;
+	width: 100px;
+}
+.profilePic:hover{
+	opacity: 0.5;
+}
+.profilePic:active{
+    opacity: 1;
+}
+.wrongUserLink:link {
+    text-decoration: none;
+}
+.wrongUserLink:hover {
+    text-decoration: underline;
+    color: rgba(160,160,160,1);
+}
+.wrongUserLink:active {
+    text-decoration: underline;
+    color: rgba(0,0,0,1);
+}

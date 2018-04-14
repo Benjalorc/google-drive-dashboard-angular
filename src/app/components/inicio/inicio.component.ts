@@ -9,7 +9,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class InicioComponent implements OnInit {
 
 	gapi: any;
+	gUser: any;
 	isLogged: boolean;
+	username: string;
+	imgUrl: string;
+
+	loading: boolean;
 
   constructor(private router: Router, 
   			  private route:ActivatedRoute,
@@ -29,18 +34,26 @@ export class InicioComponent implements OnInit {
 	renderButton(){
 
 	  	let _self = this;
+	  	this.loading = true;
 
 	  	//Inicializa un boton pre-configurado para permitir
 	  	//El inicio de sesion
 
 	  	function onSignIn(googleUser) {
 
+	  		_self.gUser = googleUser;
+	  		_self.username = googleUser.getBasicProfile().getName();
+	  		_self.imgUrl = googleUser.getBasicProfile().getImageUrl();
 			_self.isLogged = true;
-			_self.router.navigate(['/dashboard']);
+			_self.loading = false;
 			_self.cd.detectChanges();
 		}
 
-		function onFailure(err){ console.log(err)}
+		function onFailure(err){ 
+			console.log(err);
+			_self.loading = false;
+			_self.cd.detectChanges();
+		}
   	
 	  	this.gapi.signin2.render('my-signin2', {
 	        'scope': 'profile email',
@@ -50,6 +63,20 @@ export class InicioComponent implements OnInit {
 	        'theme': 'dark',
 	        'onsuccess': onSignIn,
 	        'onfailure': onFailure
-	      });
+	    });
+
+	    setTimeout(() =>{
+	    
+			let element: HTMLElement = document.querySelector("#my-signin2 > div") as HTMLElement;
+			element.addEventListener("click", function(){
+				_self.loading = true;
+			});
+	    },500)
+	    this.loading = false;
+	}
+
+	cambiarUsuario(){
+		let element: HTMLElement = document.querySelector("#my-signin2 > div") as HTMLElement;
+		element.click()
 	}
 }

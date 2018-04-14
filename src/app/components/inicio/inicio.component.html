@@ -1,8 +1,52 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="botonLogin">
-	<div id="my-signin2"></div>
+<div class="row push">
+	<div class="col">
+		
+	</div>
+</div>
+<div class="row">
+	<div class="col"></div>
+	<div class="col-auto">
+
+		<div class="row">
+			<div class="col">		
+				<div id="my-signin2"></div> 
+			</div>
+		</div>
+		
+	</div>
+	<div class="col"></div>
 </div>
 
-<div class="botonContinuar">
-	<a *ngIf="isLogged" routerLink="/dashboard">Entrar</a>
+<div class="row" *ngIf="isLogged">
+	<div class="col"></div>
+	<div class="col-auto">		
+		  <img class="card-img-top profilePic" (click)="cambiarUsuario()" [src]="imgUrl">
+	</div>
+	<div class="col"></div>
+</div>
+<div class="row" *ngIf="isLogged">
+	<div class="col"></div>
+	<div class="col-12 col-md-6">
+
+		<div class="card text-center bg-light">
+		  <div class="card-header">
+		    Acceso Autorizado
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">Bienvenido(a) {{username}}</h5>
+		    <p class="card-text">Ya puede ingresar a su dashboard haciendo click en el botón a continuación.</p>
+			<a class="btn btn-outline-success" routerLink="/dashboard">Continuar</a>
+		  </div>
+		  <div class="card-footer text-muted">
+			<p class="wrongUserLink" (click)="cambiarUsuario()"> ¿No eres {{username}}? </p> 
+		  </div>
+
+		</div>
+	</div>
+	<div class="col"></div>
+</div>
+
+
+<div *ngIf="loading" class="loadingWindow">
+	<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
 </div>
