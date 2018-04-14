@@ -36,7 +36,10 @@ export class DashboardComponent implements OnInit {
   totalStorageChart: any;
 
   fileChanges: any[];
-  teamChanges: any[];
+  docFiles: any[];
+  spreadFiles: any[];
+  presentationFiles: any[];
+  drawingFiles: any[];
 
   sessionExpires: number;
 
@@ -87,6 +90,7 @@ export class DashboardComponent implements OnInit {
         this.cargarPerfil();
         this.cargarAlmacenamiento();
         this.cargarCambios();
+        this.listarArchivos();
         this.cd.detectChanges();
       }
     }
@@ -163,7 +167,6 @@ export class DashboardComponent implements OnInit {
     this.myGapi.getChanges().subscribe(data =>{
 
       this.fileChanges = [];
-      this.teamChanges = [];
 
       if(data.status == 200){
 
@@ -173,13 +176,56 @@ export class DashboardComponent implements OnInit {
               this.fileChanges.push(element);
         })
 
-      this.cd.detectChanges();
+        this.cd.detectChanges();
 
-
-        console.log(data);
       }
 
     });
+  }
+
+  listarArchivos(){
+
+    this.myGapi.getFilesList().subscribe(data =>{
+
+      if(data.status == 200){
+
+        this.docFiles = [];
+        this.spreadFiles = [];
+        this.presentationFiles = [];
+        this.drawingFiles = [];
+
+        data.result.files.forEach((element) =>{
+
+          element.time = new Date(element.modifiedTime);
+
+          switch(element.mimeType){
+
+            case "application/vnd.google-apps.document":
+              this.docFiles.push(element);
+            break;
+
+            case "application/vnd.google-apps.spreadsheet":
+              this.spreadFiles.push(element);
+            break;
+
+            case "application/vnd.google-apps.presentation":
+              this.presentationFiles.push(element);
+            break;
+
+            case "application/vnd.google-apps.drawing":
+              this.drawingFiles.push(element);
+            break;
+
+          }
+
+        });
+
+        this.cd.detectChanges();
+      }
+
+
+    });
+
   }
 
   drawStorageTotalChart(){
