@@ -11,6 +11,8 @@ export class GapiService {
 	private gapi: any;
 	private googleAuth: any;
 
+	private changesToken: string;
+
 	private data: Observable<any>;
 
   constructor() { 
@@ -56,6 +58,10 @@ export class GapiService {
 			//Si la instancia de googleAuth existe retorna
 			//Un JSON con el valor del estado de conexion
 
+				this.gapi.client.drive.changes.getStartPageToken()
+				.then((res) =>{_self.changesToken = res.result.startPageToken});
+
+
 			return {"iniciado": true, "valor": _self.isLogged()};
 	    }
 	}
@@ -79,6 +85,27 @@ export class GapiService {
 			    observer.complete()
 	        });
 		});
+	}
+
+	getChanges(): Observable<any>{
+
+		let _self = this;
+
+		
+		if(!_self.changesToken || _self.changesToken == ""){
+			return new Observable((observer) =>{
+
+				this.gapi.client.drive.files.list({fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5})
+				.then((res) =>{
+							
+					_self.changesToken = res.nextPageToken;
+
+				    observer.next(res);
+				    observer.complete()
+				});
+			});
+		}
+
 	}
 
 }
