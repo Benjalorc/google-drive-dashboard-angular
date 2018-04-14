@@ -1,1 +1,126 @@
-<button *ngIf="isLogged" (click)="signOut()">Salir</button>
+<div class="row separadoVertical">
+	<div class="col"></div>
+	<div class="col-6 col-md-3">
+
+		<img [src]="userpic" class="profilePic">
+
+	</div>
+	<div class="col col-md-1"></div>
+	<div class="col-12 col-md-4">
+
+		<div class="card text-center bg-light">
+		  <div class="card-header">
+		    Usuario
+		  </div>
+		  <div class="card-body">
+		    <p class="card-text">Nombre: {{username}}</p>
+		    <p class="card-text">E-Mail: {{usermail}}</p>
+		  </div>
+		  <div class="card-footer text-muted">
+			<p> Tiempo restante de la sesion: {{sessionExpires}} min. </p> 
+		  </div>
+
+		</div>	
+
+	</div>
+	<div class="col"></div>
+</div>
+
+<div class="row separadoVertical">
+
+
+	<div class="col-12 col-md-4 separadoVerticalMenor">
+
+		<div class="card text-center border-success bg-transparent">
+		  <div class="card-header">
+		    Almacenamiento total
+		  </div>
+		  <div class="card-body">
+			<canvas id="storageChartCanvas" width="200" height="200">{{ totalStorageChart }}</canvas>
+		  </div>
+		  <div class="card-footer text-muted">
+			<p> {{storageUsage}} / {{storageLimit}} GB </p> 
+		  </div>
+
+		</div>
+
+	</div>
+
+	<div class="col-12 col-md-4 separadoVerticalMenor">
+
+		<div class="card text-center border-info bg-light">
+		  <div class="card-header">
+		    Almacenamiento en Drive
+		  </div>
+		  <div class="card-body">
+			<canvas id="driveChartCanvas" width="200" height="200">{{ driveStorageChart }}</canvas>
+		  </div>
+		  <div class="card-footer text-muted">
+			<p> {{storageUsageDrive}} / {{storageLimit}} GB </p> 
+		  </div>
+
+		</div>
+
+	</div>
+
+	<div class="col-12 col-md-4 separadoVerticalMenor">
+
+		<div class="card text-center border-info bg-light">
+		  <div class="card-header">
+		    Almacenamiento en Papelera
+		  </div>
+		  <div class="card-body">
+			<canvas id="trashChartCanvas" width="200" height="200">{{ trashStorageChart }}</canvas>
+		  </div>
+		  <div class="card-footer text-muted">
+			<p> {{storageUsageTrash}} / {{storageLimit}} GB </p> 
+
+		  </div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class="row separadoVertical">
+
+	<div class="col-12 col-md-4 separadoVerticalMenor">
+
+		<div class="card text-white bg-info mb-3">
+		  <div class="card-header">
+		    Limite de subida de archivos
+		  </div>
+		  <div class="card-body">
+
+				<p>  	
+					<strong>Otro archivos: </strong> {{maxUploadSize}} MB
+				</p>
+				 <p>
+				 	<strong>Document: </strong> {{maxImportSizes.document}} MB
+				 </p> 
+				 <p>
+				  <strong>Presentation: </strong> {{maxImportSizes.presentation}} MB
+				 </p>
+				 <p>		 	
+				  <strong>Spreadsheet: </strong> {{maxImportSizes.spreadsheet}} MB
+				 </p>
+				 <p>
+				  <strong>Draw: </strong> {{maxImportSizes.draw}} MB
+				 </p>
+
+		  </div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<!--
+<button *ngIf="isLogged" type="button" class="btn btn-outline-warning" (click)="signOut()">Salir</button>
+-->
+
+<div *ngIf="loading" class="loadingWindow">
+	<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+</div>

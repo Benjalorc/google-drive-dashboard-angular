@@ -1,0 +1,12 @@
+.profilePic{
+	border-radius: 50%;
+	width: 95%;
+}
+
+.separadoVertical{ 
+	margin-top:20px; 
+}
+
+.separadoVerticalMenor{ 
+	margin-top:10px; 
+}
