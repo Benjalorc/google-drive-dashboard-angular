@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
@@ -25,7 +26,8 @@ const appRoutes : Routes = [
   imports: [
     BrowserModule,
     AngularFontAwesomeModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    NgbModule.forRoot()
   ],
   providers: [GapiService],
   bootstrap: [AppComponent]
