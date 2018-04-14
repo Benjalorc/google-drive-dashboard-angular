@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class GapiService {
@@ -9,6 +10,8 @@ export class GapiService {
 	private discoveryDocs: string[];
 	private gapi: any;
 	private googleAuth: any;
+
+	private data: Observable<any>;
 
   constructor() { 
 
@@ -60,6 +63,22 @@ export class GapiService {
 	isLogged(){
 
 		return this.googleAuth.isSignedIn.get();
+	}
+
+	getAbout(): Observable<any>{
+
+		let _self = this;
+
+		return new Observable((observer) => {
+
+			_self.gapi.client.drive.about.get({
+	          'fields': "storageQuota, maxUploadSize, maxImportSizes"
+	        }).then(function(response) {
+
+			    observer.next(response);
+			    observer.complete()
+	        });
+		});
 	}
 
 }
