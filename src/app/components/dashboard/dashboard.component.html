@@ -8,16 +8,15 @@
 	<div class="col col-md-1"></div>
 	<div class="col-12 col-md-4">
 
-		<div class="card text-center bg-light">
+		<div class="card bg-light">
 		  <div class="card-header">
-		    Usuario
+			<i class="fa fa-user-circle-o" style="font-size:24px"></i> Usuario 
 		  </div>
 		  <div class="card-body">
-		    <p class="card-text">Nombre: {{username}}</p>
-		    <p class="card-text">E-Mail: {{usermail}}</p>
+		    <p class="card-text"><i class="fa fa-address-card-o" style="font-size:24px"></i>Nombre: {{username}}</p>
+		    <p class="card-text"><i class="fa fa-envelope-open-o" style="font-size:24px"></i>E-mail: {{usermail}}</p>
 		  </div>
 		  <div class="card-footer text-muted">
-			<p> Tiempo restante de la sesion: {{sessionExpires}} min. </p> 
 		  </div>
 
 		</div>	
@@ -89,25 +88,144 @@
 
 		<div class="card text-white bg-info mb-3">
 		  <div class="card-header">
-		    Limite de subida de archivos
+		    Limites de tamaño de archivos
 		  </div>
 		  <div class="card-body">
 
-				<p>  	
-					<strong>Otro archivos: </strong> {{maxUploadSize}} MB
-				</p>
-				 <p>
-				 	<strong>Document: </strong> {{maxImportSizes.document}} MB
-				 </p> 
-				 <p>
-				  <strong>Presentation: </strong> {{maxImportSizes.presentation}} MB
-				 </p>
-				 <p>		 	
-				  <strong>Spreadsheet: </strong> {{maxImportSizes.spreadsheet}} MB
-				 </p>
-				 <p>
-				  <strong>Draw: </strong> {{maxImportSizes.draw}} MB
-				 </p>
+			<p> <strong>Subidas: </strong> {{maxUploadSize}} GB</p>
+			<p> <strong>Documentos importados: </strong> {{maxImportSizes.document}} MB</p> 
+			<p> <strong>Presentaciones importadas: </strong> {{maxImportSizes.presentation}} MB</p>
+			<p> <strong>Hojas de Cálculo importadas: </strong> {{maxImportSizes.spreadsheet}} MB</p>
+			<p> <strong>Documentos de Draw importados: </strong> {{maxImportSizes.draw}} MB</p>
+
+		  </div>
+
+		</div>
+
+	</div>
+
+	<div class="col-12 col-md-8 separadoVerticalMenor">
+
+		<div class="card border-warning bg-transparent">
+		  <div class="card-body">
+
+			<ngb-tabset>
+			  <ngb-tab title="Cambios recientes en archivos">
+			    <ng-template ngbTabContent>
+
+			    	<div *ngIf="!fileChanges || !fileChanges.length">
+						<p class="card-text">No hay cambios en archivos que mostrar</p>
+			    	</div>
+			    	<div class="table-responsive" *ngIf="fileChanges&&fileChanges.length">
+			    		
+				    	<table class="table">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Nombre</th>
+						      <th scope="col">Ubicacion</th>
+						      <th scope="col">Modificado</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr *ngFor="let file of fileChanges; let i = index;">
+						      <th scope="row">{{i+1}}</th>
+						      <td>{{file.name}}</td>
+						      <td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
+						      <td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>					    
+						  </tr>
+						  </tbody>
+				    	</table>
+
+			    	</div>
+
+			    </ng-template>
+			  </ngb-tab>
+			</ngb-tabset>
+
+		  </div>
+		  <div class="card-footer text-muted">
+			<p>  </p> 
+		  </div>
+
+		</div>
+
+	</div>
+
+</div>
+
+
+<div class="row separadoVertical">
+
+	<div class="col-12 col-md-6 separadoVerticalMenor">
+
+		<div class="card border-primary bg-light mb-3">
+		  <div class="card-header">
+		    Documentos
+		  </div>
+		  <div class="card-body">
+
+		  </div>
+
+		  <div class="card-footer text-muted">
+
+		  </div>
+
+		</div>
+
+	</div>
+
+	<div class="col-12 col-md-6 separadoVerticalMenor">
+
+		<div class="card border-warning bg-light mb-3">
+		  <div class="card-header">
+		    Presentaciones
+		  </div>
+		  <div class="card-body">
+
+		  </div>
+
+		  <div class="card-footer text-muted">
+
+		  </div>
+
+		</div>
+
+	</div>
+
+</div>
+
+<div class="row separadoVertical">
+
+	<div class="col-12 col-md-6 separadoVerticalMenor">
+
+		<div class="card border-success bg-light mb-3">
+		  <div class="card-header">
+		    Hojas de Cálculo
+		  </div>
+		  <div class="card-body">
+
+		  </div>
+
+		  <div class="card-footer text-muted">
+
+		  </div>
+
+		</div>
+
+	</div>
+
+	<div class="col-12 col-md-6 separadoVerticalMenor">
+
+		<div class="card border-danger bg-light mb-3">
+		  <div class="card-header">
+		    Drawings
+		  </div>
+		  <div class="card-body">
+
+		  </div>
+
+		  <div class="card-footer text-muted">
 
 		  </div>
 

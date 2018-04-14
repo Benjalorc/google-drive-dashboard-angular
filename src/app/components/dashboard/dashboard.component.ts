@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
   storageUsage: number;
   storageUsageDrive: number;
   storageUsageTrash: number;
-  maxUploadSize: number;
+  maxUploadSize: number = 0;
   maxImportSizes: any = {
     'documents': 0,
     'presentation': 0,
@@ -34,6 +34,9 @@ export class DashboardComponent implements OnInit {
   trashStorageChart: any;
   driveStorageChart: any;
   totalStorageChart: any;
+
+  fileChanges: any[];
+  teamChanges: any[];
 
   sessionExpires: number;
 
@@ -83,6 +86,7 @@ export class DashboardComponent implements OnInit {
         this.isLogged = status.valor;
         this.cargarPerfil();
         this.cargarAlmacenamiento();
+        this.cargarCambios();
         this.cd.detectChanges();
       }
     }
@@ -130,7 +134,7 @@ export class DashboardComponent implements OnInit {
         this.storageUsageDrive = (!quota.usageInDrive ? 0 : parseFloat((quota.usageInDrive/1073741824).toFixed(2)) );
         this.storageUsageTrash = (!quota.usageInTrash ? 0 : parseFloat((quota.usageInTrash/1073741824).toFixed(2)) );
 
-        this.maxUploadSize = (!data.result.maxUploadSize ? 0 : parseFloat((data.result.maxUploadSize/1099511627776).toFixed(2)));
+        this.maxUploadSize = (!data.result.maxUploadSize ? 0 : parseFloat((data.result.maxUploadSize/1073741824).toFixed(2)));
 
         let docsize = imports["application/vnd.google-apps.document"];
         let drawsize = imports["application/vnd.google-apps.drawing"];
@@ -154,6 +158,29 @@ export class DashboardComponent implements OnInit {
     });  
   }
 
+  cargarCambios(){
+
+    this.myGapi.getChanges().subscribe(data =>{
+
+      this.fileChanges = [];
+      this.teamChanges = [];
+
+      if(data.status == 200){
+
+        data.result.files.forEach((element) =>{
+
+              element.time = new Date(element.modifiedTime);
+              this.fileChanges.push(element);
+        })
+
+      this.cd.detectChanges();
+
+
+        console.log(data);
+      }
+
+    });
+  }
 
   drawStorageTotalChart(){
 
@@ -161,7 +188,7 @@ export class DashboardComponent implements OnInit {
       labels: ['En uso','Disponible'],
       datasets: [{
         data: [this.storageUsage, this.storageLimit-this.storageUsage],
-        backgroundColor: ['red','green']
+        backgroundColor: ['red','#0000FF']
 
       }]
     }
@@ -175,7 +202,7 @@ export class DashboardComponent implements OnInit {
       labels: ['En Drive','Otros'],
       datasets: [{
         data: [this.storageUsageDrive, this.storageLimit-this.storageUsageDrive],
-        backgroundColor: ['black','blue']
+        backgroundColor: ['black','#00FF99']
 
       }]
     }
@@ -189,7 +216,7 @@ export class DashboardComponent implements OnInit {
       labels: ['Papelera','Otros'],
       datasets: [{
         data: [this.storageUsageTrash, this.storageLimit-this.storageUsageTrash],
-        backgroundColor: ['black','blue']
+        backgroundColor: ['black','#3333FF']
 
       }]
     }
