@@ -1,31 +1,61 @@
 <div class="container">
 
+
 <div class="row separadoVertical">
-	<div class="col"></div>
 	<div class="col-6 col-md-3">
 
-		<img [src]="userpic" class="profilePic">
-
-	</div>
-	<div class="col col-md-1"></div>
-	<div class="col-12 col-md-4">
-
-		<div class="card bg-light">
-		  <div class="card-header">
-			<i class="fa fa-user-circle-o" style="font-size:24px"></i> Usuario 
+		<div class="card text-center border-info bg-light">
+		  <img class="card-img-top link" src="../../../assets/img/docs.png" alt="Card image cap">
+		  <div class="card-body"> 
+		  	<p>Documentos</p>
 		  </div>
-		  <div class="card-body">
-		    <p class="card-text"><i class="fa fa-address-card-o" style="font-size:24px"></i> Nombre: {{username}}</p>
-		    <p class="card-text"><i class="fa fa-envelope-open-o" style="font-size:24px"></i> E-mail: {{usermail}}</p>
+		  <div class="card-footer border-info text-muted">
+			<h2>{{numeroDocumentos}}</h2>
 		  </div>
-		  <div class="card-footer text-muted">
-		  </div>
-
 		</div>	
-
+		
 	</div>
-	<div class="col"></div>
+	<div class="col-6 col-md-3">
+
+		<div class="card text-center border-success bg-light">
+		  <img class="card-img-top link" src="../../../assets/img/spreadsheets.png" alt="Card image cap">
+		  <div class="card-body"> 
+		  	<p>Hojas de Cálculo</p>
+		  </div>
+		  <div class="card-footer border-success text-muted">
+		  	<h2>{{numeroSpreadsheets}}</h2>	
+		  </div>
+		</div>	
+		
+	</div>
+	<div class="col-6 col-md-3">
+
+		<div class="card text-center border-warning bg-light">
+		  <img class="card-img-top link" src="../../../assets/img/slides.png" alt="Card image cap">
+		  <div class="card-body"> 
+		  	<p>Presentaciones</p>
+		  </div>
+		  <div class="card-footer border-warning text-muted">
+			<h2>{{numeroPresentaciones}}</h2>
+		  </div>
+		</div>	
+		
+	</div>
+	<div class="col-6 col-md-3">
+
+		<div class="card text-center border-danger bg-light">
+		  <img class="card-img-top link" src="../../../assets/img/drawings.png" alt="Card image cap">
+		  <div class="card-body">
+		  	<p>Drawings</p>
+		  </div>
+		  <div class="card-footer border-danger text-muted">
+			<h2>{{numeroDrawings}}</h2>
+		  </div>
+		</div>	
+		
+	</div>
 </div>
+
 
 <div class="row separadoVertical">
 
@@ -145,9 +175,6 @@
 			  </ngb-tab>
 			</ngb-tabset>
 
-		  </div>
-		  <div class="card-footer text-muted">
-			<p>  </p> 
 		  </div>
 
 		</div>
@@ -455,8 +482,35 @@
 <button *ngIf="isLogged" type="button" class="btn btn-outline-warning" (click)="signOut()">Salir</button>
 -->
 
-<div *ngIf="loading" class="loadingWindow">
-	<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+<div *ngIf="loading||sidenavOpen" class="loadingWindow">
+	<i *ngIf="loading" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
 </div>
+
+</div>
+
+<div class="floating-special" (click)="toggleMenu()">
+	<img [src]="userpic" class="profilePic">
+</div>
+
+<div class="sidenav" id="mySidenav">
+	
+	<div class="card bg-light">
+
+	  <div class="card-header">
+		<i class="fa fa-user-circle-o" style="font-size:24px"></i> Usuario 
+	  </div>
+	
+	  <div class="card-body">
+	    <p class="card-text"><i class="fa fa-address-card-o" style="font-size:24px"></i> Nombre:</p>
+	    <p>{{username}}</p>
+	    <p class="card-text"><i class="fa fa-envelope-open-o" style="font-size:24px"></i> E-mail:</p>
+	    <p> {{usermail}} </p>
+	  </div>
+	
+	  <div class="card-footer text-muted">
+	  	<button type="button" class="btn btn-outline-danger" (click)="signOut()"><i class="fa fa-sign-out" style="font-size:24px"></i>Salir</button>
+	  </div>
+
+	</div>	
 
 </div>

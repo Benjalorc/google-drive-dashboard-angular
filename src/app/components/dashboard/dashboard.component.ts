@@ -37,12 +37,17 @@ export class DashboardComponent implements OnInit {
 
   fileChanges: any[];
   docFiles: any[];
+  numeroDocumentos: number;
   spreadFiles: any[];
+  numeroSpreadsheets: number;
   presentationFiles: any[];
+  numeroPresentaciones: number;
   drawingFiles: any[];
+  numeroDrawings: number;
 
   sessionExpires: number;
 
+  sidenavOpen: boolean;
   loading: boolean;
 
   constructor(private myGapi: GapiService, 
@@ -185,6 +190,11 @@ export class DashboardComponent implements OnInit {
 
   listarArchivos(){
 
+    this.numeroDocumentos = 0;
+    this.numeroSpreadsheets = 0;
+    this.numeroPresentaciones = 0;
+    this.numeroDrawings = 0;
+
     this.myGapi.getFilesList().subscribe(data =>{
 
       if(data.status == 200){
@@ -219,6 +229,11 @@ export class DashboardComponent implements OnInit {
           }
 
         });
+
+        this.numeroDocumentos = this.docFiles.length;
+        this.numeroSpreadsheets = this.spreadFiles.length;
+        this.numeroPresentaciones = this.presentationFiles.length;
+        this.numeroDrawings = this.drawingFiles.length;
 
         this.cd.detectChanges();
       }
@@ -291,5 +306,22 @@ export class DashboardComponent implements OnInit {
           }
         });
 
+  }
+
+  toggleMenu(){
+    if(this.sidenavOpen){
+
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("mySidenav").style.height = "0";
+      document.getElementById("mySidenav").style.top = "75%";
+      this.sidenavOpen = false;
+    }
+    else{
+
+      document.getElementById("mySidenav").style.width = "15em";            
+      document.getElementById("mySidenav").style.height = "100%";
+      document.getElementById("mySidenav").style.top = "10%";
+      this.sidenavOpen = true;
+    }
   }
 }

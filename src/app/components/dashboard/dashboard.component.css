@@ -1,6 +1,6 @@
 .profilePic{
 	border-radius: 50%;
-	width: 80%;
+	width: 100%;
 }
 
 .separadoVertical{ 
@@ -9,4 +9,42 @@
 
 .separadoVerticalMenor{ 
 	margin-top:10px; 
+}
+
+.floating-special{
+
+	position:fixed;
+	width:80px;
+	height:80px;
+	bottom:40px;
+	right:40px;
+	border-radius:50%;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+	z-index: 25;
+}
+
+.floating-special:active{
+
+	bottom:38px;
+	right:38px;
+}
+
+.sidenav {
+    height: 0;
+    width: 0;
+    position: fixed;
+    z-index: 20;
+    top: 85%;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+img.link:hover{
+	opacity: 0.5;
+}
+img.link:active{
+	opacity: 1;
 }
