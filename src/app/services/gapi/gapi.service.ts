@@ -126,42 +126,22 @@ export class GapiService {
 	}
 
 
-	getFilesList(): Observable<any>{
+	getFilesList(pageToken): Observable<any>{
 
 
 		let _self = this;
 
-		if(!this.filesToken || this.filesToken == ""){
+		return new Observable((observer) =>{
 
-			return new Observable((observer) =>{
+			this.gapi.client.drive.files.list({pageSize: 5, pageToken: pageToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType', orderBy: "modifiedTime desc"})
+			.then((res) =>{
 
-				this.gapi.client.drive.files.list({fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType', orderBy: "modifiedTime desc"})
-				.then((res) =>{
+				_self.changesToken = res.nextPageToken;
 
-					_self.changesToken = res.nextPageToken;
-
-				    observer.next(res);
-				    observer.complete()
-				});
+			    observer.next(res);
+			    observer.complete()
 			});
-
-		}
-		else{
-
-			return new Observable((observer) =>{
-
-				this.gapi.client.drive.files.list({pageToken: _self.changesToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType', orderBy: "modifiedTime desc"})
-				.then((res) =>{
-
-					_self.changesToken = res.nextPageToken;
-
-				    observer.next(res);
-				    observer.complete()
-				});
-			});
-
-		}
-
+		});
 
 	}
 

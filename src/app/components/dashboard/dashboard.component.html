@@ -5,7 +5,7 @@
 	<div class="col-6 col-md-3">
 
 		<div class="card text-center border-info bg-light">
-		  <img class="card-img-top link" src="../../../assets/img/docs.png" alt="Card image cap">
+		  <a href="https://docs.google.com/documents/" target="_blank"><img class="card-img-top link" src="../../../assets/img/docs.png" alt="Card image cap"></a>
 		  <div class="card-body"> 
 		  	<p>Documentos</p>
 		  </div>
@@ -18,7 +18,7 @@
 	<div class="col-6 col-md-3">
 
 		<div class="card text-center border-success bg-light">
-		  <img class="card-img-top link" src="../../../assets/img/spreadsheets.png" alt="Card image cap">
+		  <a href="https://docs.google.com/spreadsheets/"></a><img class="card-img-top link" src="../../../assets/img/spreadsheets.png" alt="Card image cap">
 		  <div class="card-body"> 
 		  	<p>Hojas de Cálculo</p>
 		  </div>
@@ -31,8 +31,8 @@
 	<div class="col-6 col-md-3">
 
 		<div class="card text-center border-warning bg-light">
-		  <img class="card-img-top link" src="../../../assets/img/slides.png" alt="Card image cap">
-		  <div class="card-body"> 
+		  <a href="https://docs.google.com/presentation/" target="_blank"><img class="card-img-top link" src="../../../assets/img/slides.png" alt="Card image cap"></a>
+		  <div class="card-body">
 		  	<p>Presentaciones</p>
 		  </div>
 		  <div class="card-footer border-warning text-muted">
@@ -44,7 +44,7 @@
 	<div class="col-6 col-md-3">
 
 		<div class="card text-center border-danger bg-light">
-		  <img class="card-img-top link" src="../../../assets/img/drawings.png" alt="Card image cap">
+		  <a href="https://drive.google.com/" target="_blank"><img class="card-img-top link" src="../../../assets/img/drawings.png" alt="Card image cap"></a>
 		  <div class="card-body">
 		  	<p>Drawings</p>
 		  </div>
@@ -126,9 +126,13 @@
 
 			<p> <strong>Subidas: </strong> {{maxUploadSize}} GB</p>
 			<p> <strong>Documentos importados: </strong> {{maxImportSizes.document}} MB</p> 
+			<p> </p> 
 			<p> <strong>Presentaciones importadas: </strong> {{maxImportSizes.presentation}} MB</p>
+			<p> </p>
 			<p> <strong>Hojas de Cálculo importadas: </strong> {{maxImportSizes.spreadsheet}} MB</p>
-			<p> <strong>Documentos de Draw importados: </strong> {{maxImportSizes.draw}} MB</p>
+			<p> </p>
+			<p> <strong>Drawings importados: </strong> {{maxImportSizes.draw}} MB</p>
+			<p> </p>
 
 		  </div>
 
@@ -190,6 +194,8 @@
 
 		<div class="card border-primary bg-light mb-3">
 		  <div class="card-header bg-primary text-white">
+		    <i *ngIf="docFiles.length>5" class="fa fa-folder-open-o"></i>
+		    <i *ngIf="docFiles.length<=5" class="fa fa-folder-o"></i>
 		    Documentos
 		  </div>
 		  <div class="card-body">
@@ -263,6 +269,8 @@
 
 		<div class="card border-warning bg-light mb-3">
 		  <div class="card-header bg-warning text-white">
+		    <i *ngIf="presentationFiles.length>5" class="fa fa-folder-open-o"></i>
+		    <i *ngIf="presentationFiles.length<=5" class="fa fa-folder-o"></i>
 		    Presentaciones
 		  </div>
 <div class="card-body">
@@ -338,6 +346,8 @@
 
 		<div class="card border-success bg-light mb-3">
 		  <div class="card-header bg-success text-white">
+		    <i *ngIf="spreadFiles.length>5" class="fa fa-folder-open-o"></i>
+		    <i *ngIf="spreadFiles.length<=5" class="fa fa-folder-o"></i>
 		    Hojas de Cálculo
 		  </div>
 <div class="card-body">
@@ -409,6 +419,8 @@
 
 		<div class="card border-danger bg-light mb-3">
 		  <div class="card-header bg-danger text-white">
+		    <i *ngIf="drawingFiles.length>5" class="fa fa-folder-open-o"></i>
+		    <i *ngIf="drawingFiles.length<=5" class="fa fa-folder-o"></i>
 		    Drawings
 		  </div>
 <div class="card-body">
@@ -482,8 +494,12 @@
 <button *ngIf="isLogged" type="button" class="btn btn-outline-warning" (click)="signOut()">Salir</button>
 -->
 
-<div *ngIf="loading||sidenavOpen" class="loadingWindow">
-	<i *ngIf="loading" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+<div *ngIf="loadingCenter||sidenavOpen" class="loadingWindow">
+	<i *ngIf="loadingCenter" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+</div>
+
+<div *ngIf="loadingCorner&&!loadingCenter" class="loadingCorner">
+	<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
 </div>
 
 </div>

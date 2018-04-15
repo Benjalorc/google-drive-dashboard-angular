@@ -36,19 +36,20 @@ export class DashboardComponent implements OnInit {
   totalStorageChart: any;
 
   fileChanges: any[];
-  docFiles: any[];
+  docFiles: any[] = [];
   numeroDocumentos: number;
-  spreadFiles: any[];
+  spreadFiles: any[] = [];
   numeroSpreadsheets: number;
-  presentationFiles: any[];
+  presentationFiles: any[] = [];
   numeroPresentaciones: number;
-  drawingFiles: any[];
+  drawingFiles: any[] = [];
   numeroDrawings: number;
 
   sessionExpires: number;
 
   sidenavOpen: boolean;
-  loading: boolean;
+  loadingCenter: boolean;
+  loadingCorner: boolean;
 
   constructor(private myGapi: GapiService, 
               private router: Router, 
@@ -72,7 +73,7 @@ export class DashboardComponent implements OnInit {
     let _self = this;
     let status = this.myGapi.checkStatus();
 
-    this.loading = true;
+    this.loadingCenter = true;
 
     //Verifica el stado de conexion. Si no se consiguio
     //Se vuelve a verificar pasado medio segundo
@@ -83,7 +84,7 @@ export class DashboardComponent implements OnInit {
     }
     else{
 
-      this.loading = false;
+      this.loadingCenter = false;
 
       //Si el usuario no esta conectado lo redirecciona al inicio
 
@@ -95,7 +96,7 @@ export class DashboardComponent implements OnInit {
         this.cargarPerfil();
         this.cargarAlmacenamiento();
         this.cargarCambios();
-        this.listarArchivos();
+        this.listarArchivos('');
         this.cd.detectChanges();
       }
     }
@@ -188,21 +189,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  listarArchivos(){
+  listarArchivos(pageToken){
 
-    this.numeroDocumentos = 0;
-    this.numeroSpreadsheets = 0;
-    this.numeroPresentaciones = 0;
-    this.numeroDrawings = 0;
+    this.loadingCorner = true;
 
-    this.myGapi.getFilesList().subscribe(data =>{
+    this.myGapi.getFilesList(pageToken).subscribe(data =>{
 
       if(data.status == 200){
-
-        this.docFiles = [];
-        this.spreadFiles = [];
-        this.presentationFiles = [];
-        this.drawingFiles = [];
 
         data.result.files.forEach((element) =>{
 
@@ -235,6 +228,14 @@ export class DashboardComponent implements OnInit {
         this.numeroPresentaciones = this.presentationFiles.length;
         this.numeroDrawings = this.drawingFiles.length;
 
+
+        if(data.result.nextPageToken){
+          this.listarArchivos(data.result.nextPageToken);
+          this.loadingCorner = true;
+        }
+        else{
+          this.loadingCorner = false;
+        }
         this.cd.detectChanges();
       }
 
