@@ -1,9 +1,35 @@
-<div class="row push">
-	<div class="col">
-		
-	</div>
-</div>
-<div class="row">
+<ngb-carousel *ngIf="images">
+
+	<ng-template ngbSlide>
+		<img [src]="images[0]" class="carousel" alt="Random first slide">
+		<div class="carousel-caption apertura-boton">
+			<h3>First slide label</h3>
+			<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+		</div>
+	</ng-template>
+
+	<ng-template ngbSlide>
+		<img [src]="images[1]" class="carousel" alt="Random second slide">
+		<div class="carousel-caption apertura-boton">
+			<h3>Second slide label</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		</div>
+	</ng-template>
+	
+	<ng-template ngbSlide>
+		<img [src]="images[2]" class="carousel" alt="Random third slide">
+		<div class="carousel-caption apertura-boton">
+			<h3>Third slide label</h3>
+			<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+		</div>
+	</ng-template>
+
+</ngb-carousel>
+
+<div class="container">
+	
+
+<div class="row sigin-button">
 	<div class="col"></div>
 	<div class="col-auto">
 
@@ -17,36 +43,37 @@
 	<div class="col"></div>
 </div>
 
-<div class="row" *ngIf="isLogged">
-	<div class="col"></div>
-	<div class="col-auto">		
-		  <img class="card-img-top profilePic" (click)="cambiarUsuario()" [src]="imgUrl">
-	</div>
-	<div class="col"></div>
 </div>
-<div class="row" *ngIf="isLogged">
-	<div class="col"></div>
-	<div class="col-12 col-md-6">
 
-		<div class="card text-center bg-light">
-		  <div class="card-header">
-		    Acceso Autorizado
-		  </div>
-		  <div class="card-body">
-		    <h5 class="card-title">Bienvenido(a) {{username}}</h5>
-		    <p class="card-text">Ya puede ingresar a su dashboard haciendo click en el botón a continuación.</p>
-			<a class="btn btn-outline-success" routerLink="/dashboard">Continuar</a>
-		  </div>
-		  <div class="card-footer text-muted">
-			<p class="wrongUserLink" (click)="cambiarUsuario()"> ¿No eres {{username}}? </p> 
-		  </div>
+<div class="container push-down">
 
+	<div class="row" *ngIf="isLogged">
+		<div class="col-2 col-md-1"></div>
+		<div class="col-8 col-md-4 profilePic" (mouseenter)="toggleSwitch('on')" (mouseleave)="toggleSwitch('off')">
+			<img class="card-img-top profilePic" (click)="cambiarUsuario()" [src]="imgUrl">
+			<span *ngIf="showSwitch" class="overlay-switch" (click)="cambiarUsuario()"><i class="fa fa-exchange" aria-hidden="true"></i> <p>Cambiar Usuario</p> </span>
 		</div>
+		<div class="col-2 col-md-auto"></div>
+		<div class="col-12 col-md-6">
+			<div class="card text-center bg-light">
+			  <div class="card-header">
+			    <span class="golden"> <i class="fa fa-key" aria-hidden="true"></i> </span>Acceso Autorizado
+			  </div>
+			  <div class="card-body">
+			    <h5 class="card-title">Bienvenido(a) {{username}}!</h5>
+			    <p class="card-text">Ya puede ingresar a su dashboard haciendo click en el botón a continuación.</p>
+				<a class="btn btn-outline-success" routerLink="/dashboard">Continuar</a>
+			  </div>
+			  <div class="card-footer text-muted">
+				<span class="wrongUserLink" (click)="cambiarUsuario()"> ¿No eres {{username}}? </span> 
+			  </div>
+			</div>
+		</div>
+		<div class="col-auto"></div>
 	</div>
-	<div class="col"></div>
-</div>
 
+	<div *ngIf="loading" class="loadingWindow">
+		<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+	</div>
 
-<div *ngIf="loading" class="loadingWindow">
-	<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
 </div>
