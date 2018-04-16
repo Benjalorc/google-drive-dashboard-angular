@@ -314,15 +314,18 @@ export class DashboardComponent implements OnInit {
 
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("mySidenav").style.height = "0";
-      document.getElementById("mySidenav").style.top = "75%";
       this.sidenavOpen = false;
     }
     else{
 
       document.getElementById("mySidenav").style.width = "15em";            
-      document.getElementById("mySidenav").style.height = "100%";
-      document.getElementById("mySidenav").style.top = "10%";
+      document.getElementById("mySidenav").style.height = "30em";
       this.sidenavOpen = true;
     }
+  }
+
+  handleCurtain(){
+
+    if(this.sidenavOpen) this.toggleMenu();
   }
 }

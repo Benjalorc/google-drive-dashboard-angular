@@ -198,6 +198,7 @@
 		    <i *ngIf="docFiles.length<=5" class="fa fa-folder-o"></i>
 		    Documentos
 		  </div>
+
 		  <div class="card-body">
 
 			<div *ngIf="!docFiles || !docFiles.length">
@@ -270,10 +271,11 @@
 		<div class="card border-warning bg-light mb-3">
 		  <div class="card-header bg-warning text-white">
 		    <i *ngIf="presentationFiles.length>5" class="fa fa-folder-open-o"></i>
-		    <i *ngIf="presentationFiles.length<=5" class="fa fa-folder-o"></i>
-		    Presentaciones
-		  </div>
-<div class="card-body">
+		    	<i *ngIf="presentationFiles.length<=5" class="fa fa-folder-o"></i>
+		    	Presentaciones
+			</div>
+
+			<div class="card-body">
 
 		    	<div *ngIf="!presentationFiles || !presentationFiles.length">
 					<p class="card-text">No hay documentos que mostrar</p>
@@ -345,12 +347,13 @@
 	<div class="col-12 col-lg-6 separadoVerticalMenor">
 
 		<div class="card border-success bg-light mb-3">
-		  <div class="card-header bg-success text-white">
-		    <i *ngIf="spreadFiles.length>5" class="fa fa-folder-open-o"></i>
-		    <i *ngIf="spreadFiles.length<=5" class="fa fa-folder-o"></i>
-		    Hojas de Cálculo
-		  </div>
-<div class="card-body">
+			<div class="card-header bg-success text-white">
+		    	<i *ngIf="spreadFiles.length>5" class="fa fa-folder-open-o"></i>
+				<i *ngIf="spreadFiles.length<=5" class="fa fa-folder-o"></i>
+				Hojas de Cálculo
+			</div>
+
+			<div class="card-body">
 
 		    	<div *ngIf="!spreadFiles || !spreadFiles.length">
 					<p class="card-text">No hay documentos que mostrar</p>
@@ -418,12 +421,13 @@
 	<div class="col-12 col-lg-6 separadoVerticalMenor">
 
 		<div class="card border-danger bg-light mb-3">
-		  <div class="card-header bg-danger text-white">
-		    <i *ngIf="drawingFiles.length>5" class="fa fa-folder-open-o"></i>
-		    <i *ngIf="drawingFiles.length<=5" class="fa fa-folder-o"></i>
-		    Drawings
-		  </div>
-<div class="card-body">
+			<div class="card-header bg-danger text-white">
+		    	<i *ngIf="drawingFiles.length>5" class="fa fa-folder-open-o"></i>
+		    	<i *ngIf="drawingFiles.length<=5" class="fa fa-folder-o"></i>
+		    	Drawings
+			</div>
+
+			<div class="card-body">
 
 		    	<div *ngIf="!drawingFiles || !drawingFiles.length">
 					<p class="card-text">No hay documentos que mostrar</p>
@@ -494,7 +498,7 @@
 <button *ngIf="isLogged" type="button" class="btn btn-outline-warning" (click)="signOut()">Salir</button>
 -->
 
-<div *ngIf="loadingCenter||sidenavOpen" class="loadingWindow">
+<div *ngIf="loadingCenter||sidenavOpen" class="loadingWindow" (click)="handleCurtain()">
 	<i *ngIf="loadingCenter" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
 </div>
 
