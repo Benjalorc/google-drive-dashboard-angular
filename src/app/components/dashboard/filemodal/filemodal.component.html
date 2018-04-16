@@ -1,4 +1,4 @@
-<button type="button" class="btn btn-outline-light" (click)="open(content)"> 
+<button type="button" class="btn btn-outline-light" (click)="open(content)" [disabled]="listado.length<=5"> 
 	<i *ngIf="listado.length>5"  class="fa fa-folder-open-o"></i> 
 	<i *ngIf="listado.length<=5" class="fa fa-folder-o"></i>
 </button>
