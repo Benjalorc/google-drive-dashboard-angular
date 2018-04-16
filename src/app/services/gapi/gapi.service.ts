@@ -59,12 +59,14 @@ export class GapiService {
 
 			//Si la instancia de googleAuth existe retorna
 			//Un JSON con el valor del estado de conexion
+			let con = _self.isLogged();
+
+			if(con){
 
 				this.gapi.client.drive.changes.getStartPageToken()
 				.then((res) =>{_self.changesToken = res.result.startPageToken});
-
-
-			return {"iniciado": true, "valor": _self.isLogged()};
+			}
+			return {"iniciado": true, "valor": con};
 	    }
 	}
 
