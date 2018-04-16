@@ -1,0 +1,42 @@
+<button type="button" class="btn btn-outline-light" (click)="open(content)"> 
+	<i *ngIf="listado.length>5"  class="fa fa-folder-open-o"></i> 
+	<i *ngIf="listado.length<=5" class="fa fa-folder-o"></i>
+</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{titulo}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+	<div class="table-responsive" style="overflow: auto; height: 20em;">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Ubicacion</th>
+					<th scope="col">Modificado</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let file of listado; let i = index;">
+					<th scope="row">{{i+1}}</th>
+					<td>{{file.name}}</td>
+					<td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
+					<td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>					    
+				</tr>
+			</tbody>
+		</table>
+
+	</div>  	
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

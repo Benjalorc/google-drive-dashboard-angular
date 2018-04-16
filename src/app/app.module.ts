@@ -7,7 +7,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FilemodalComponent } from './components/dashboard/filemodal/filemodal.component';
 
 import { GapiService } from './services/gapi/gapi.service';
 
@@ -21,7 +23,8 @@ const appRoutes : Routes = [
   declarations: [
     AppComponent,
     InicioComponent,
-    DashboardComponent
+    DashboardComponent,
+    FilemodalComponent
   ],
   imports: [
     BrowserModule,
