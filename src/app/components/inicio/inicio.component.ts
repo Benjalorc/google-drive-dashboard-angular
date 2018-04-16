@@ -24,9 +24,10 @@ export class InicioComponent implements OnInit {
   			  private route:ActivatedRoute,
   			  private cd: ChangeDetectorRef,
   			  config: NgbCarouselConfig) { 
-	
-		config.interval = 7000;
 
+		console.log("VINE VINE");
+		config.interval = 7000;
+	
 		let _self = this;
 		_self.gapi = window["gapi"];
 		setTimeout(() =>{
@@ -78,8 +79,9 @@ export class InicioComponent implements OnInit {
 			element.addEventListener("click", function(){
 				_self.loading = true;
 			});
-	    },500)
+	    },500);
 	    this.loading = false;
+		this.cd.detectChanges();
 	}
 
 	cambiarUsuario(){
