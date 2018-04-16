@@ -13,7 +13,6 @@ import { Chart } from 'chart.js';
 export class DashboardComponent implements OnInit {
 
   gapi: any;
-  isLogged: boolean;
 
   username: string;
   usermail: string;
@@ -47,9 +46,9 @@ export class DashboardComponent implements OnInit {
 
   sessionExpires: number;
 
-  sidenavOpen: boolean;
-  loadingCenter: boolean;
-  loadingCorner: boolean;
+  sidenavOpen: boolean = false;
+  loadingCenter: boolean = true;;
+  loadingCorner: boolean = false;;
 
   constructor(private myGapi: GapiService, 
               private router: Router, 
@@ -71,9 +70,11 @@ export class DashboardComponent implements OnInit {
   validateStatus(){
 
     let _self = this;
-    let status = this.myGapi.checkStatus();
 
     this.loadingCenter = true;
+    this.cd.detectChanges();
+
+    let status = this.myGapi.checkStatus();
 
     //Verifica el stado de conexion. Si no se consiguio
     //Se vuelve a verificar pasado medio segundo
@@ -92,7 +93,6 @@ export class DashboardComponent implements OnInit {
         this.router.navigate(["/"])
       }
       else{
-        this.isLogged = status.valor;
         this.cargarPerfil();
         this.cargarAlmacenamiento();
         this.cargarCambios();
@@ -110,7 +110,9 @@ export class DashboardComponent implements OnInit {
     //Desconecta al usuario de la aplicacion
 
   	auth2.signOut().then(function () {
-   		_self.router.navigate(['/']);
+      setTimeout(() =>{
+     		_self.router.navigate(['/']);
+      },2000)
    	});
 	}
 
@@ -322,6 +324,7 @@ export class DashboardComponent implements OnInit {
       document.getElementById("mySidenav").style.height = "30em";
       this.sidenavOpen = true;
     }
+    this.cd.detectChanges();
   }
 
   handleCurtain(){

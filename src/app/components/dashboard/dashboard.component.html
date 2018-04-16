@@ -192,10 +192,10 @@
 
 	<div class="col-12 col-lg-6 separadoVerticalMenor">
 
+
 		<div class="card border-primary bg-light mb-3">
 		  <div class="card-header bg-primary text-white">
-		    <i *ngIf="docFiles.length>5" class="fa fa-folder-open-o"></i>
-		    <i *ngIf="docFiles.length<=5" class="fa fa-folder-o"></i>
+		  	<app-filemodal [listado]="docFiles" [titulo]="'Documentos'"></app-filemodal>
 		    Documentos
 		  </div>
 
@@ -269,9 +269,8 @@
 	<div class="col-12 col-lg-6 separadoVerticalMenor">
 
 		<div class="card border-warning bg-light mb-3">
-		  <div class="card-header bg-warning text-white">
-		    <i *ngIf="presentationFiles.length>5" class="fa fa-folder-open-o"></i>
-		    	<i *ngIf="presentationFiles.length<=5" class="fa fa-folder-o"></i>
+			<div class="card-header bg-warning text-white">
+		  		<app-filemodal [listado]="presentationFiles" [titulo]="'Presentaciones'"></app-filemodal>
 		    	Presentaciones
 			</div>
 
@@ -348,8 +347,7 @@
 
 		<div class="card border-success bg-light mb-3">
 			<div class="card-header bg-success text-white">
-		    	<i *ngIf="spreadFiles.length>5" class="fa fa-folder-open-o"></i>
-				<i *ngIf="spreadFiles.length<=5" class="fa fa-folder-o"></i>
+		  		<app-filemodal [listado]="spreadFiles" [titulo]="'Hojas de Cálculo'"></app-filemodal>
 				Hojas de Cálculo
 			</div>
 
@@ -422,8 +420,7 @@
 
 		<div class="card border-danger bg-light mb-3">
 			<div class="card-header bg-danger text-white">
-		    	<i *ngIf="drawingFiles.length>5" class="fa fa-folder-open-o"></i>
-		    	<i *ngIf="drawingFiles.length<=5" class="fa fa-folder-o"></i>
+		  		<app-filemodal [listado]="drawingFiles" [titulo]="'Drawings'"></app-filemodal>
 		    	Drawings
 			</div>
 
@@ -498,9 +495,9 @@
 <button *ngIf="isLogged" type="button" class="btn btn-outline-warning" (click)="signOut()">Salir</button>
 -->
 
-<div *ngIf="loadingCenter||sidenavOpen" class="loadingWindow" (click)="handleCurtain()">
-	<i *ngIf="loadingCenter" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
-</div>
+<div *ngIf="loadingCenter||sidenavOpen" class="loadingWindow" (click)="handleCurtain()"></div>
+
+<i *ngIf="loadingCenter" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
 
 <div *ngIf="loadingCorner&&!loadingCenter" class="loadingCorner">
 	<i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
