@@ -18,15 +18,14 @@ export class InicioComponent implements OnInit {
 	loading: boolean;
 	showSwitch: boolean;
 
-	images: string[] = ["https://picsum.photos/1000/450/?image=307", "https://picsum.photos/1000/450/?image=509", "https://picsum.photos/1000/450/?image=109"];
+	images: string[] = ["../../../assets/img/slide-1-transparent.png", "../../../assets/img/slide-2-transparent.png", "../../../assets/img/slide-3-transparent.png"];
 
   constructor(private router: Router, 
   			  private route:ActivatedRoute,
   			  private cd: ChangeDetectorRef,
   			  config: NgbCarouselConfig) { 
 
-		console.log("VINE VINE");
-		config.interval = 7000;
+		config.interval = 4000;
 	
 		let _self = this;
 		_self.gapi = window["gapi"];

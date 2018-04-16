@@ -30,8 +30,8 @@ img.carousel{
 	z-index: 2000;
 }
 
-.apertura-boton{
-	margin-bottom: 1.5em;
+.slide-text{
+	top: 50%;
 }
 
 .push-down{
@@ -44,13 +44,8 @@ img.carousel{
 
 .overlay-switch{
 	position: absolute;
-	top: 20%;
-	left: 35%;
-	font-size:	96px; 
+	top: 0.6em;
+	left: 30%;
+	font-size:	72px; 
 	z-index: 10;
-}
-
-span > p{
-	font-size: 14px;
-	color: yellow;
 }
