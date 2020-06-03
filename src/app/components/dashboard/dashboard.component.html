@@ -1,5 +1,5 @@
-<div class="row separadoVertical">
-    <div class="col-6 col-md-3">
+<div class="row spacing-1">
+    <div class="col-12 col-sm-6 col-md-3">
 
         <div class="card text-center border-info bg-light">
             <a href="https://docs.google.com/documents/" target="_blank"><img class="card-img-top link" src="../../../assets/img/docs.png" alt="Card image cap"></a>
@@ -12,10 +12,10 @@
         </div>
 
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-12 col-sm-6 col-md-3">
 
         <div class="card text-center border-success bg-light">
-            <a href="https://docs.google.com/spreadsheets/"></a><img class="card-img-top link" src="../../../assets/img/spreadsheets.png" alt="Card image cap">
+            <a href="https://docs.google.com/spreadsheets/"><img class="card-img-top link" src="../../../assets/img/spreadsheets.png" alt="Card image cap"></a>
             <div class="card-body">
                 <p>Hojas de Cálculo</p>
             </div>
@@ -25,7 +25,7 @@
         </div>
 
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-12 col-sm-6 col-md-3">
 
         <div class="card text-center border-warning bg-light">
             <a href="https://docs.google.com/presentation/" target="_blank"><img class="card-img-top link" src="../../../assets/img/slides.png" alt="Card image cap"></a>
@@ -38,7 +38,7 @@
         </div>
 
     </div>
-    <div class="col-6 col-md-3">
+    <div class="col-12 col-sm-6 col-md-3">
 
         <div class="card text-center border-danger bg-light">
             <a href="https://drive.google.com/" target="_blank"><img class="card-img-top link" src="../../../assets/img/drawings.png" alt="Card image cap"></a>
@@ -53,9 +53,9 @@
     </div>
 </div>
 
-<div class="row separadoVertical">
+<div class="row spacing-1">
 
-    <div class="col-12 col-md-4 separadoVerticalMenor">
+    <div class="col-12 col-md-4 spacing-2">
 
         <div class="card text-center border-success bg-transparent">
             <div class="card-header">
@@ -72,7 +72,7 @@
 
     </div>
 
-    <div class="col-12 col-md-4 separadoVerticalMenor">
+    <div class="col-12 col-md-4 spacing-2">
 
         <div class="card text-center border-info bg-light">
             <div class="card-header">
@@ -89,7 +89,7 @@
 
     </div>
 
-    <div class="col-12 col-md-4 separadoVerticalMenor">
+    <div class="col-12 col-md-4 spacing-2">
 
         <div class="card text-center border-info bg-light">
             <div class="card-header">
@@ -109,9 +109,9 @@
 
 </div>
 
-<div class="row separadoVertical">
+<div class="row spacing-1">
 
-    <div class="col-12 col-md-4 separadoVerticalMenor">
+    <div class="col-12 col-md-4 spacing-2">
 
         <div class="card text-white bg-info mb-3">
             <div class="card-header">
@@ -131,7 +131,7 @@
 
     </div>
 
-    <div class="col-12 col-md-8 separadoVerticalMenor">
+    <div class="col-12 col-md-8 spacing-2">
 
         <div class="card border-warning bg-transparent">
             <div class="card-body">
@@ -178,9 +178,9 @@
 
 </div>
 
-<div class="row separadoVertical">
+<div class="row spacing-1">
 
-    <div class="col-12 col-lg-6 separadoVerticalMenor">
+    <div class="col-12 col-lg-6 spacing-2">
 
         <div class="card border-primary bg-light mb-3">
             <div class="card-header bg-primary text-white">
@@ -255,7 +255,7 @@
 
     </div>
 
-    <div class="col-12 col-lg-6 separadoVerticalMenor">
+    <div class="col-12 col-lg-6 spacing-2">
 
         <div class="card border-warning bg-light mb-3">
             <div class="card-header bg-warning text-white">
@@ -330,9 +330,9 @@
 
 </div>
 
-<div class="row separadoVertical">
+<div class="row spacing-1">
 
-    <div class="col-12 col-lg-6 separadoVerticalMenor">
+    <div class="col-12 col-lg-6 spacing-2">
 
         <div class="card border-success bg-light mb-3">
             <div class="card-header bg-success text-white">
@@ -405,7 +405,7 @@
 
     </div>
 
-    <div class="col-12 col-lg-6 separadoVerticalMenor">
+    <div class="col-12 col-lg-6 spacing-2">
 
         <div class="card border-danger bg-light mb-3">
             <div class="card-header bg-danger text-white">
@@ -480,21 +480,6 @@
 
 </div>
 
-<!--
-<button *ngIf="isLogged" type="button" class="btn btn-outline-warning" (click)="signOut()">Salir</button>
--->
-
-<div *ngIf="loadingCenter||sidenavOpen" class="loadingWindow" (click)="handleCurtain()"></div>
-
-<i *ngIf="loadingCenter" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
-
-<div *ngIf="loadingCorner&&!loadingCenter" class="loadingCorner">
-    <i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
-</div>
-
-<div class="floating-special" (click)="toggleMenu()">
-    <img [src]="userpic" class="profilePic">
-</div>
 
 <div class="sidenav" id="mySidenav">
 
@@ -517,4 +502,16 @@
 
     </div>
 
+</div>
+
+<div *ngIf="loadingCenter || sidenavOpen" class="dash-backdrop" (click)="handleCurtain()"></div>
+
+<i *ngIf="loadingCenter" class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+
+<div *ngIf="loadingCorner && !loadingCenter" class="loadingCorner">
+    <i class="fa fa-spinner fa-spin" style="font-size:48px"></i>
+</div>
+
+<div class="floating-special" (click)="toggleMenu()">
+    <img [src]="userpic" class="profilePic">
 </div>

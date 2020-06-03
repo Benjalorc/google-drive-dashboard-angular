@@ -314,14 +314,12 @@ export class DashboardComponent implements OnInit {
   toggleMenu(){
     if(this.sidenavOpen){
 
-      document.getElementById("mySidenav").style.width = "0";
-      document.getElementById("mySidenav").style.height = "0";
+      document.getElementById("mySidenav").classList.remove("open");
       this.sidenavOpen = false;
     }
     else{
 
-      document.getElementById("mySidenav").style.width = "15em";            
-      document.getElementById("mySidenav").style.height = "30em";
+      document.getElementById("mySidenav").classList.add("open");
       this.sidenavOpen = true;
     }
     this.cd.detectChanges();
