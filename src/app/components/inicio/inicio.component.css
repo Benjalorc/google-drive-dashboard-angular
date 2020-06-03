@@ -25,9 +25,10 @@ img.carousel{
 	height: 100%;
 }
 
-.sigin-button{
-	margin-top: -5em;
-	z-index: 2000;
+#my-signin2{
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-evenly;
 }
 
 .slide-text{
