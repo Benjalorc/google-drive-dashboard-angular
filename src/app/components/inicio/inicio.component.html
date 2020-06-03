@@ -49,9 +49,9 @@
 				<div class="row" *ngIf="isLogged">
 
 					<div class="col-3 col-md-4"></div>
-					<div class="col-6 col-md-4 profilePic"  (mouseenter)="toggleSwitch('on')" (mouseleave)="toggleSwitch('off')">
+					<div class="col-6 col-md-4 profilePic">
 						<img class="card-img-top profilePic" (click)="cambiarUsuario()" [src]="imgUrl">
-						<span *ngIf="showSwitch" class="overlay-switch" (click)="cambiarUsuario()"><i class="fa fa-exchange" aria-hidden="true"></i></span>
+						<span class="overlay-switch" (click)="cambiarUsuario()"><i class="fa fa-exchange" aria-hidden="true"></i></span>
 					</div>
 					<div class="col-3 col-md-4"></div>
 					<div class="col-12">

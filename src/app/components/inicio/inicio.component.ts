@@ -16,7 +16,6 @@ export class InicioComponent implements OnInit {
 	imgUrl: string;
 
 	loading: boolean;
-	showSwitch: boolean;
 
 	images: string[] = ["../../../assets/img/slide-1-transparent.png", "../../../assets/img/slide-2-transparent.png", "../../../assets/img/slide-3-transparent.png"];
 
@@ -88,10 +87,4 @@ export class InicioComponent implements OnInit {
 		element.click()
 	}
 
-	toggleSwitch(e){
-
-		if(e=='on') this.showSwitch = true;
-		if(e=='off') this.showSwitch = false;
-		this.cd.detectChanges();
-	}
 }
