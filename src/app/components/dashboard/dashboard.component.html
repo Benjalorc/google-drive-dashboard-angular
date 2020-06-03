@@ -237,7 +237,7 @@
                                 <td>{{docFiles[4].time.getDate()}}-{{docFiles[4].time.getMonth()+1}}-{{docFiles[4].time.getFullYear()}}</td>
                             </tr>
                         </tbody>
-                        <tbody *ngIf="docFiles.length < 5">
+                        <tbody *ngIf="docFiles.length <= 5">
                             <tr *ngFor="let file of docFiles; let i = index;">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{file.name}}</td>
@@ -311,7 +311,7 @@
                                 <td>{{presentationFiles[4].time.getDate()}}-{{presentationFiles[4].time.getMonth()+1}}-{{presentationFiles[4].time.getFullYear()}}</td>
                             </tr>
                         </tbody>
-                        <tbody *ngIf="presentationFiles.length < 5">
+                        <tbody *ngIf="presentationFiles.length <= 5">
                             <tr *ngFor="let file of presentationFiles; let i = index;">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{file.name}}</td>
@@ -388,7 +388,7 @@
                                 <td>{{spreadFiles[4].time.getDate()}}-{{spreadFiles[4].time.getMonth()+1}}-{{spreadFiles[4].time.getFullYear()}}</td>
                             </tr>
                         </tbody>
-                        <tbody *ngIf="spreadFiles.length < 5">
+                        <tbody *ngIf="spreadFiles.length <= 5">
                             <tr *ngFor="let file of spreadFiles; let i = index;">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{file.name}}</td>
@@ -461,7 +461,7 @@
                                 <td>{{drawingFiles[4].time.getDate()}}-{{drawingFiles[4].time.getMonth()+1}}-{{drawingFiles[4].time.getFullYear()}}</td>
                             </tr>
                         </tbody>
-                        <tbody *ngIf="drawingFiles.length < 5">
+                        <tbody *ngIf="drawingFiles.length <= 5">
                             <tr *ngFor="let file of drawingFiles; let i = index;">
                                 <th scope="row">{{i+1}}</th>
                                 <td>{{file.name}}</td>
