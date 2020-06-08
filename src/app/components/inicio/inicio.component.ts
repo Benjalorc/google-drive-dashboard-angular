@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,43 +22,42 @@ export class InicioComponent implements OnInit {
   constructor(private router: Router, 
   			  private route:ActivatedRoute,
   			  private cd: ChangeDetectorRef,
+  			  private ngZone: NgZone,
   			  config: NgbCarouselConfig) { 
 
-		config.interval = 4000;
+		config.interval = 3000;
 	
-		let _self = this;
-		_self.gapi = window["gapi"];
-		setTimeout(() =>{
-			_self.renderButton();
-		},200);
   }
 
   ngOnInit() {
 
+	this.gapi = window["gapi"];
+	setTimeout(() =>{
+		this.renderButton();
+	},200);
   }
 
 	renderButton(){
 
-	  	let _self = this;
 	  	this.loading = true;
 
 	  	//Inicializa un boton pre-configurado para permitir
 	  	//El inicio de sesion
 
-	  	function onSignIn(googleUser) {
+	  	let onSignIn = (googleUser)=> {
 
-	  		_self.gUser = googleUser;
-	  		_self.username = googleUser.getBasicProfile().getName();
-	  		_self.imgUrl = googleUser.getBasicProfile().getImageUrl();
-			_self.isLogged = true;
-			_self.loading = false;
-			_self.cd.detectChanges();
+	  		this.gUser = googleUser;
+	  		this.username = googleUser.getBasicProfile().getName();
+	  		this.imgUrl = googleUser.getBasicProfile().getImageUrl();
+			this.isLogged = true;
+			this.loading = false;
+			this.cd.detectChanges();
 		}
 
-		function onFailure(err){ 
+		let onFailure = (err)=>{ 
 			console.log(err);
-			_self.loading = false;
-			_self.cd.detectChanges();
+			this.loading = false;
+			this.cd.detectChanges();
 		}
   	
 	  	this.gapi.signin2.render('my-signin2', {
@@ -74,10 +73,10 @@ export class InicioComponent implements OnInit {
 	    setTimeout(() =>{
 	    
 			let element: HTMLElement = document.querySelector("#my-signin2 > div") as HTMLElement;
-			element.addEventListener("click", function(){
-				_self.loading = true;
+			element.addEventListener("click", ()=>{
+				this.loading = true;
 			});
-	    },500);
+	    },1000);
 	    this.loading = false;
 		this.cd.detectChanges();
 	}
@@ -85,6 +84,10 @@ export class InicioComponent implements OnInit {
 	cambiarUsuario(){
 		let element: HTMLElement = document.querySelector("#my-signin2 > div") as HTMLElement;
 		element.click()
+	}
+
+	goDashboard(){
+		this.ngZone.run(() => this.router.navigate(['/dashboard'])).then();
 	}
 
 }

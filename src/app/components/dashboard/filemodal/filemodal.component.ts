@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-filemodal',
@@ -12,32 +11,12 @@ export class FilemodalComponent{
 	@Input() listado;
 	@Input() titulo;
 
-	closeResult: string;
-
-	constructor(private modalService: NgbModal) {}
+	constructor(public modalService: NgbModal) {}
 
 	ngOnInit() {
 	}
 
 	open(content) {
-		this.modalService.open(content, {size: 'lg'}).result.then((result) => {
-			this.closeResult = `Closed with: ${result}`;
-		}, (reason) => {
-
-			this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-		});
-
-		console.log(this.listado);
+		this.modalService.open(content, {size: 'lg'});
 	}
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return  `with: ${reason}`;
-    }
-  }
-
 }

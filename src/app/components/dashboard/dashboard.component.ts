@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GapiService } from '../../services/gapi/gapi.service'
 import { Chart } from 'chart.js';
@@ -52,24 +52,20 @@ export class DashboardComponent implements OnInit {
 
   constructor(private myGapi: GapiService, 
               private router: Router, 
+              private ngZone: NgZone,
               private cd: ChangeDetectorRef,
               private route: ActivatedRoute) { 
-
-      let _self = this;
-      setTimeout(() =>{
-
-        _self.gapi = window["gapi"];
-        _self.validateStatus();
-      },500)
   }
 
   ngOnInit() {
 
+    setTimeout(() =>{
+      this.gapi = window["gapi"];
+      this.validateStatus();
+    },500);
   }
 
   validateStatus(){
-
-    let _self = this;
 
     this.loadingCenter = true;
     this.cd.detectChanges();
@@ -81,7 +77,7 @@ export class DashboardComponent implements OnInit {
 
     if(!status.iniciado){
 
-      setTimeout(() =>{ _self.validateStatus(); },500);
+      setTimeout(() =>{ this.validateStatus(); },500);
     }
     else{
 
@@ -90,7 +86,7 @@ export class DashboardComponent implements OnInit {
       //Si el usuario no esta conectado lo redirecciona al inicio
 
       if(!status.valor){
-        this.router.navigate(["/"])
+        this.toHome();
       }
       else{
         this.cargarPerfil();
@@ -109,12 +105,16 @@ export class DashboardComponent implements OnInit {
 
     //Desconecta al usuario de la aplicacion
 
-  	auth2.signOut().then(function () {
+  	auth2.signOut().then(()=> {
       setTimeout(() =>{
-     		_self.router.navigate(['/']);
+     		this.toHome();
       },2000)
    	});
 	}
+
+  toHome(){
+    this.ngZone.run(() => this.router.navigate(["/"]) ).then();
+  }
 
   cargarPerfil(){
 
