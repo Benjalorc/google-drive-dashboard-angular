@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { GapiService } from '../../services/gapi/gapi.service'
 import { Chart } from 'chart.js';
@@ -53,7 +53,6 @@ export class DashboardComponent implements OnInit {
   constructor(private myGapi: GapiService, 
               private router: Router, 
               private ngZone: NgZone,
-              private cd: ChangeDetectorRef,
               private route: ActivatedRoute) { 
   }
 
@@ -65,12 +64,11 @@ export class DashboardComponent implements OnInit {
     },500);
   }
 
-  validateStatus(){
+  async validateStatus(){
 
     this.loadingCenter = true;
-    this.cd.detectChanges();
 
-    let status = this.myGapi.checkStatus();
+    let status = await this.myGapi.checkStatus();
 
     //Verifica el stado de conexion. Si no se consiguio
     //Se vuelve a verificar pasado medio segundo
@@ -93,7 +91,6 @@ export class DashboardComponent implements OnInit {
         this.cargarAlmacenamiento();
         this.cargarCambios();
         this.listarArchivos('');
-        this.cd.detectChanges();
       }
     }
   }
@@ -146,7 +143,7 @@ export class DashboardComponent implements OnInit {
         this.storageUsageDrive = (!quota.usageInDrive ? 0 : parseFloat((quota.usageInDrive/1073741824).toFixed(2)) );
         this.storageUsageTrash = (!quota.usageInTrash ? 0 : parseFloat((quota.usageInTrash/1073741824).toFixed(2)) );
 
-        this.maxUploadSize = (!data.result.maxUploadSize ? 0 : parseFloat((data.result.maxUploadSize/1073741824).toFixed(2)));
+        this.maxUploadSize = !data.result.maxUploadSize ? 0 : parseFloat((data.result.maxUploadSize/1024/1024/1024/1024).toFixed(2));
 
         let docsize = imports["application/vnd.google-apps.document"];
         let drawsize = imports["application/vnd.google-apps.drawing"];
@@ -164,8 +161,6 @@ export class DashboardComponent implements OnInit {
         this.drawStorageTotalChart();
         this.drawStorageDriveChart();
         this.drawStorageTrashChart();
-
-        this.cd.detectChanges();
       }
     });  
   }
@@ -184,65 +179,56 @@ export class DashboardComponent implements OnInit {
               this.fileChanges.push(element);
         })
 
-        this.cd.detectChanges();
-
       }
 
     });
   }
 
-  listarArchivos(pageToken){
+  async listarArchivos(pageToken){
 
     this.loadingCorner = true;
 
-    this.myGapi.getFilesList(pageToken).subscribe(data =>{
+    let data = await this.myGapi.getFilesList(pageToken);
 
-      if(data.status == 200){
+    if(data && data.status == 200){
 
-        data.result.files.forEach((element) =>{
+      data.result.files.forEach((element) =>{
 
-          element.time = new Date(element.modifiedTime);
+        element.time = new Date(element.modifiedTime);
+        switch(element.mimeType){
 
-          switch(element.mimeType){
+          case "application/vnd.google-apps.document":
+            this.docFiles.push(element);
+          break;
 
-            case "application/vnd.google-apps.document":
-              this.docFiles.push(element);
-            break;
+          case "application/vnd.google-apps.spreadsheet":
+            this.spreadFiles.push(element);
+          break;
 
-            case "application/vnd.google-apps.spreadsheet":
-              this.spreadFiles.push(element);
-            break;
+          case "application/vnd.google-apps.presentation":
+            this.presentationFiles.push(element);
+          break;
 
-            case "application/vnd.google-apps.presentation":
-              this.presentationFiles.push(element);
-            break;
-
-            case "application/vnd.google-apps.drawing":
-              this.drawingFiles.push(element);
-            break;
-
-          }
-
-        });
-
-        this.numeroDocumentos = this.docFiles.length;
-        this.numeroSpreadsheets = this.spreadFiles.length;
-        this.numeroPresentaciones = this.presentationFiles.length;
-        this.numeroDrawings = this.drawingFiles.length;
-
-
-        if(data.result.nextPageToken){
-          this.listarArchivos(data.result.nextPageToken);
-          this.loadingCorner = true;
+          case "application/vnd.google-apps.drawing":
+            this.drawingFiles.push(element);
+          break;
         }
-        else{
-          this.loadingCorner = false;
-        }
-        this.cd.detectChanges();
+
+      });
+
+      this.numeroDocumentos = this.docFiles.length;
+      this.numeroSpreadsheets = this.spreadFiles.length;
+      this.numeroPresentaciones = this.presentationFiles.length;
+      this.numeroDrawings = this.drawingFiles.length;
+
+      if(data.result.nextPageToken){
+        this.listarArchivos(data.result.nextPageToken);
+        this.loadingCorner = true;
       }
-
-
-    });
+      else{
+        this.loadingCorner = false;
+      }
+    }
 
   }
 
@@ -322,7 +308,6 @@ export class DashboardComponent implements OnInit {
       document.getElementById("mySidenav").classList.add("open");
       this.sidenavOpen = true;
     }
-    this.cd.detectChanges();
   }
 
   handleCurtain(){

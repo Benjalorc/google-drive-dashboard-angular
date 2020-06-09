@@ -31,45 +31,35 @@ export class GapiService {
 	this.gapi = window["gapi"];
   }
 
-	checkStatus(){
+	async checkStatus(){
 
-		//Guardar el scope del servicio
-		let _self = this;
 
 		//Si aun no existe una instancia de googleAuth la inicializa
 		//Y retorna un JSON que se podra leer para saber que aun
 		//No se ha inicializado googleAuth
 
 		if(!this.googleAuth){
-	
-	      setTimeout(() =>{
 
-	        _self.gapi.client.init({
-	          'apiKey': _self.apiKey,
-	          'clientId': _self.clientId,
-	          'scope': _self.scope,
-	          'discoveryDocs': _self.discoveryDocs
-	        }).then(function () {
-	          
-	          _self.googleAuth = _self.gapi.auth2.getAuthInstance();
+	        let ready = await this.gapi.client.init({
+	          'apiKey': this.apiKey,
+	          'clientId': this.clientId,
+	          'scope': this.scope,
+	          'discoveryDocs': this.discoveryDocs
+	        });
+	        this.googleAuth = this.gapi.auth2.getAuthInstance();
+	    }
+
+		//Si la instancia de googleAuth existe retorna
+		//Un JSON con el valor del estado de conexion
+		let con = this.isLogged();
+
+		if(con){
+
+			this.gapi.client.drive.changes.getStartPageToken().then((res) =>{
+				this.changesToken = res.result.startPageToken
 			});
-	      },500);
-
-	      return {"iniciado": false, "valor": "false"};
-	    }
-	    else{
-
-			//Si la instancia de googleAuth existe retorna
-			//Un JSON con el valor del estado de conexion
-			let con = _self.isLogged();
-
-			if(con){
-
-				this.gapi.client.drive.changes.getStartPageToken()
-				.then((res) =>{_self.changesToken = res.result.startPageToken});
-			}
-			return {"iniciado": true, "valor": con};
-	    }
+		}
+		return {"iniciado": true, "valor": con};
 	}
 
 	isLogged(){
@@ -79,13 +69,11 @@ export class GapiService {
 
 	getAbout(): Observable<any>{
 
-		let _self = this;
-
 		return new Observable((observer) => {
 
-			_self.gapi.client.drive.about.get({
+			this.gapi.client.drive.about.get({
 	          'fields': "storageQuota, maxUploadSize, maxImportSizes"
-	        }).then(function(response) {
+	        }).then((response)=> {
 
 			    observer.next(response);
 			    observer.complete()
@@ -95,17 +83,13 @@ export class GapiService {
 
 	getChanges(): Observable<any>{
 
-		let _self = this;
-		
 		if(!this.changesToken || this.changesToken == ""){
 
 			return new Observable((observer) =>{
 
-				this.gapi.client.drive.files.list({fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5})
-				.then((res) =>{
+				this.gapi.client.drive.files.list({fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5}).then((res) =>{
 
-					_self.filesToken = res.nextPageToken;
-
+					this.filesToken = res.nextPageToken;
 				    observer.next(res);
 				    observer.complete()
 				});
@@ -116,11 +100,9 @@ export class GapiService {
 
 			return new Observable((observer) =>{
 
-				this.gapi.client.drive.files.list({pageToken: _self.filesToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5})
-				.then((res) =>{
+				this.gapi.client.drive.files.list({pageToken: this.filesToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime', orderBy: "modifiedTime desc", pageSize: 5}).then((res) =>{
 
-					_self.filesToken = res.nextPageToken;
-
+					this.filesToken = res.nextPageToken;
 				    observer.next(res);
 				    observer.complete()
 				});
@@ -129,24 +111,17 @@ export class GapiService {
 		}
 	}
 
+	getFilesList(pageToken){
 
-	getFilesList(pageToken): Observable<any>{
+		let data = {
+			pageSize: 5,
+			pageToken: pageToken,
+			fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType',
+			q: "mimeType='application/vnd.google-apps.document' or mimeType='application/vnd.google-apps.spreadsheet' or mimeType='application/vnd.google-apps.presentation' or mimeType='application/vnd.google-apps.drawing'",
+			orderBy: "modifiedTime desc"
+		};
 
-
-		let _self = this;
-
-		return new Observable((observer) =>{
-
-			this.gapi.client.drive.files.list({pageSize: 5, pageToken: pageToken, fields: 'nextPageToken, files, files/webViewLink, files/name, files/modifiedTime, files/mimeType', orderBy: "modifiedTime desc"})
-			.then((res) =>{
-
-				_self.changesToken = res.nextPageToken;
-
-			    observer.next(res);
-			    observer.complete()
-			});
-		});
-
+		return this.gapi.client.drive.files.list(data);
 	}
 
 

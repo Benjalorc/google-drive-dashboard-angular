@@ -1,3 +1,75 @@
+<ng-template #filesList let-files="files" let-cardClass="cardClass" let-headerClass="headerClass" let-titulo="titulo">
+
+    <div [class]="cardClass">
+        <div [class]="headerClass">
+            <app-filemodal [listado]="files" [titulo]="titulo"></app-filemodal>
+            {{titulo}}
+        </div>
+
+        <div class="card-body">
+
+            <div *ngIf="!files || !files.length">
+                <p class="card-text">No hay documentos que mostrar</p>
+            </div>
+            <div class="table-responsive" *ngIf="files&&files.length">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Ubicacion</th>
+                            <th scope="col">Modificado</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="files.length>5">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{files[0].name}}</td>
+                            <td> <a [href]="files[0].webViewLink" target="_blank">Ver</a> </td>
+                            <td>{{files[0].time.getDate()}}-{{files[0].time.getMonth()+1}}-{{files[0].time.getFullYear()}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>{{files[1].name}}</td>
+                            <td> <a [href]="files[1].webViewLink" target="_blank">Ver</a> </td>
+                            <td>{{files[1].time.getDate()}}-{{files[1].time.getMonth()+1}}-{{files[1].time.getFullYear()}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>{{files[2].name}}</td>
+                            <td> <a [href]="files[2].webViewLink" target="_blank">Ver</a> </td>
+                            <td>{{files[2].time.getDate()}}-{{files[2].time.getMonth()+1}}-{{files[2].time.getFullYear()}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>{{files[3].name}}</td>
+                            <td> <a [href]="files[3].webViewLink" target="_blank">Ver</a> </td>
+                            <td>{{files[3].time.getDate()}}-{{files[3].time.getMonth()+1}}-{{files[3].time.getFullYear()}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">5</th>
+                            <td>{{files[4].name}}</td>
+                            <td> <a [href]="files[4].webViewLink" target="_blank">Ver</a> </td>
+                            <td>{{files[4].time.getDate()}}-{{files[4].time.getMonth()+1}}-{{files[4].time.getFullYear()}}</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="files.length <= 5">
+                        <tr *ngFor="let file of files; let i = index;">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{file.name}}</td>
+                            <td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
+                            <td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
 <div class="row spacing-1">
     <div class="col-12 col-sm-6 col-md-3">
 
@@ -115,11 +187,11 @@
 
         <div class="card text-white bg-info mb-3">
             <div class="card-header">
-                Limites de tamaño de archivos
+                Límites de tamaño de archivos
             </div>
             <div class="card-body">
 
-                <p> <strong>Subidas: </strong> {{maxUploadSize}} GB</p>
+                <p> <strong>Subidas: </strong> {{maxUploadSize}} TB</p>
                 <p> <strong>Documentos importados: </strong> {{maxImportSizes.document}} MB</p>
                 <p> <strong>Presentaciones importadas: </strong> {{maxImportSizes.presentation}} MB</p>
                 <p> <strong>Hojas de Cálculo importadas: </strong> {{maxImportSizes.spreadsheet}} MB</p>
@@ -182,150 +254,26 @@
 
     <div class="col-12 col-lg-6 spacing-2">
 
-        <div class="card border-primary bg-light mb-3">
-            <div class="card-header bg-primary text-white">
-                <app-filemodal [listado]="docFiles" [titulo]="'Documentos'"></app-filemodal>
-                Documentos
-            </div>
-
-            <div class="card-body">
-
-                <div *ngIf="!docFiles || !docFiles.length">
-                    <p class="card-text">No hay documentos que mostrar</p>
-                </div>
-
-                <div class="table-responsive" *ngIf="docFiles&&docFiles.length">
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Ubicacion</th>
-                                <th scope="col">Modificado</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngIf="docFiles.length>5">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{{docFiles[0].name}}</td>
-                                <td> <a [href]="docFiles[0].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{docFiles[0].time.getDate()}}-{{docFiles[0].time.getMonth()+1}}-{{docFiles[0].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>{{docFiles[1].name}}</td>
-                                <td> <a [href]="docFiles[1].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{docFiles[1].time.getDate()}}-{{docFiles[1].time.getMonth()+1}}-{{docFiles[1].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>{{docFiles[2].name}}</td>
-                                <td> <a [href]="docFiles[2].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{docFiles[2].time.getDate()}}-{{docFiles[2].time.getMonth()+1}}-{{docFiles[2].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>{{docFiles[3].name}}</td>
-                                <td> <a [href]="docFiles[3].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{docFiles[3].time.getDate()}}-{{docFiles[3].time.getMonth()+1}}-{{docFiles[3].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>{{docFiles[4].name}}</td>
-                                <td> <a [href]="docFiles[4].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{docFiles[4].time.getDate()}}-{{docFiles[4].time.getMonth()+1}}-{{docFiles[4].time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                        <tbody *ngIf="docFiles.length <= 5">
-                            <tr *ngFor="let file of docFiles; let i = index;">
-                                <th scope="row">{{i+1}}</th>
-                                <td>{{file.name}}</td>
-                                <td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-
+        <ng-container
+        [ngTemplateOutlet]="filesList"
+        [ngTemplateOutletContext]="{
+            files: docFiles,
+            cardClass: 'card border-primary bg-light mb-3',
+            headerClass: 'card-header bg-primary text-white',
+            titulo: 'Documentos'
+        }"></ng-container>
     </div>
 
     <div class="col-12 col-lg-6 spacing-2">
 
-        <div class="card border-warning bg-light mb-3">
-            <div class="card-header bg-warning text-white">
-                <app-filemodal [listado]="presentationFiles" [titulo]="'Presentaciones'"></app-filemodal>
-                Presentaciones
-            </div>
-
-            <div class="card-body">
-
-                <div *ngIf="!presentationFiles || !presentationFiles.length">
-                    <p class="card-text">No hay documentos que mostrar</p>
-                </div>
-                <div class="table-responsive" *ngIf="presentationFiles&&presentationFiles.length">
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Ubicacion</th>
-                                <th scope="col">Modificado</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngIf="presentationFiles.length>5">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{{presentationFiles[0].name}}</td>
-                                <td> <a [href]="presentationFiles[0].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{presentationFiles[0].time.getDate()}}-{{presentationFiles[0].time.getMonth()+1}}-{{presentationFiles[0].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>{{presentationFiles[1].name}}</td>
-                                <td> <a [href]="presentationFiles[1].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{presentationFiles[1].time.getDate()}}-{{presentationFiles[1].time.getMonth()+1}}-{{presentationFiles[1].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>{{presentationFiles[2].name}}</td>
-                                <td> <a [href]="presentationFiles[2].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{presentationFiles[2].time.getDate()}}-{{presentationFiles[2].time.getMonth()+1}}-{{presentationFiles[2].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>{{presentationFiles[3].name}}</td>
-                                <td> <a [href]="presentationFiles[3].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{presentationFiles[3].time.getDate()}}-{{presentationFiles[3].time.getMonth()+1}}-{{presentationFiles[3].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>{{presentationFiles[4].name}}</td>
-                                <td> <a [href]="presentationFiles[4].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{presentationFiles[4].time.getDate()}}-{{presentationFiles[4].time.getMonth()+1}}-{{presentationFiles[4].time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                        <tbody *ngIf="presentationFiles.length <= 5">
-                            <tr *ngFor="let file of presentationFiles; let i = index;">
-                                <th scope="row">{{i+1}}</th>
-                                <td>{{file.name}}</td>
-                                <td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-
+        <ng-container
+        [ngTemplateOutlet]="filesList"
+        [ngTemplateOutletContext]="{
+            files: presentationFiles,
+            cardClass: 'card border-warning bg-light mb-3',
+            headerClass: 'card-header bg-warning text-white',
+            titulo: 'Presentaciones'
+        }"></ng-container>
     </div>
 
 </div>
@@ -333,149 +281,25 @@
 <div class="row spacing-1">
 
     <div class="col-12 col-lg-6 spacing-2">
-
-        <div class="card border-success bg-light mb-3">
-            <div class="card-header bg-success text-white">
-                <app-filemodal [listado]="spreadFiles" [titulo]="'Hojas de Cálculo'"></app-filemodal>
-                Hojas de Cálculo
-            </div>
-
-            <div class="card-body">
-
-                <div *ngIf="!spreadFiles || !spreadFiles.length">
-                    <p class="card-text">No hay documentos que mostrar</p>
-                </div>
-                <div class="table-responsive" *ngIf="spreadFiles&&spreadFiles.length">
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Ubicacion</th>
-                                <th scope="col">Modificado</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngIf="spreadFiles.length>5">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{{spreadFiles[0].name}}</td>
-                                <td> <a [href]="spreadFiles[0].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{spreadFiles[0].time.getDate()}}-{{spreadFiles[0].time.getMonth()+1}}-{{spreadFiles[0].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>{{spreadFiles[1].name}}</td>
-                                <td> <a [href]="spreadFiles[1].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{spreadFiles[1].time.getDate()}}-{{spreadFiles[1].time.getMonth()+1}}-{{spreadFiles[1].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>{{spreadFiles[2].name}}</td>
-                                <td> <a [href]="spreadFiles[2].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{spreadFiles[2].time.getDate()}}-{{spreadFiles[2].time.getMonth()+1}}-{{spreadFiles[2].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>{{spreadFiles[3].name}}</td>
-                                <td> <a [href]="spreadFiles[3].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{spreadFiles[3].time.getDate()}}-{{spreadFiles[3].time.getMonth()+1}}-{{spreadFiles[3].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>{{spreadFiles[4].name}}</td>
-                                <td> <a [href]="spreadFiles[4].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{spreadFiles[4].time.getDate()}}-{{spreadFiles[4].time.getMonth()+1}}-{{spreadFiles[4].time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                        <tbody *ngIf="spreadFiles.length <= 5">
-                            <tr *ngFor="let file of spreadFiles; let i = index;">
-                                <th scope="row">{{i+1}}</th>
-                                <td>{{file.name}}</td>
-                                <td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-
+        <ng-container
+        [ngTemplateOutlet]="filesList"
+        [ngTemplateOutletContext]="{
+            files: spreadFiles,
+            cardClass: 'card border-success bg-light mb-3',
+            headerClass: 'card-header bg-success text-white',
+            titulo: 'Hojas de Cálculo'
+        }"></ng-container>
     </div>
 
     <div class="col-12 col-lg-6 spacing-2">
-
-        <div class="card border-danger bg-light mb-3">
-            <div class="card-header bg-danger text-white">
-                <app-filemodal [listado]="drawingFiles" [titulo]="'Drawings'"></app-filemodal>
-                Drawings
-            </div>
-
-            <div class="card-body">
-
-                <div *ngIf="!drawingFiles || !drawingFiles.length">
-                    <p class="card-text">No hay documentos que mostrar</p>
-                </div>
-                <div class="table-responsive" *ngIf="drawingFiles&&drawingFiles.length">
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Ubicacion</th>
-                                <th scope="col">Modificado</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngIf="drawingFiles.length>5">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>{{drawingFiles[0].name}}</td>
-                                <td> <a [href]="drawingFiles[0].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{drawingFiles[0].time.getDate()}}-{{drawingFiles[0].time.getMonth()+1}}-{{drawingFiles[0].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>{{drawingFiles[1].name}}</td>
-                                <td> <a [href]="drawingFiles[1].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{drawingFiles[1].time.getDate()}}-{{drawingFiles[1].time.getMonth()+1}}-{{drawingFiles[1].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>{{drawingFiles[2].name}}</td>
-                                <td> <a [href]="drawingFiles[2].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{drawingFiles[2].time.getDate()}}-{{drawingFiles[2].time.getMonth()+1}}-{{drawingFiles[2].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>{{drawingFiles[3].name}}</td>
-                                <td> <a [href]="drawingFiles[3].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{drawingFiles[3].time.getDate()}}-{{drawingFiles[3].time.getMonth()+1}}-{{drawingFiles[3].time.getFullYear()}}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>{{drawingFiles[4].name}}</td>
-                                <td> <a [href]="drawingFiles[4].webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{drawingFiles[4].time.getDate()}}-{{drawingFiles[4].time.getMonth()+1}}-{{drawingFiles[4].time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                        <tbody *ngIf="drawingFiles.length <= 5">
-                            <tr *ngFor="let file of drawingFiles; let i = index;">
-                                <th scope="row">{{i+1}}</th>
-                                <td>{{file.name}}</td>
-                                <td> <a [href]="file.webViewLink" target="_blank">Ver</a> </td>
-                                <td>{{file.time.getDate()}}-{{file.time.getMonth()+1}}-{{file.time.getFullYear()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-
-        </div>
-
+        <ng-container
+        [ngTemplateOutlet]="filesList"
+        [ngTemplateOutletContext]="{
+            files: drawingFiles,
+            cardClass: 'card border-danger bg-light mb-3',
+            headerClass: 'card-header bg-danger text-white',
+            titulo: 'Drawings'
+        }"></ng-container>
     </div>
 
 </div>

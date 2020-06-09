@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,7 +21,6 @@ export class InicioComponent implements OnInit {
 
   constructor(private router: Router, 
   			  private route:ActivatedRoute,
-  			  private cd: ChangeDetectorRef,
   			  private ngZone: NgZone,
   			  config: NgbCarouselConfig) { 
 
@@ -51,13 +50,11 @@ export class InicioComponent implements OnInit {
 	  		this.imgUrl = googleUser.getBasicProfile().getImageUrl();
 			this.isLogged = true;
 			this.loading = false;
-			this.cd.detectChanges();
 		}
 
 		let onFailure = (err)=>{ 
 			console.log(err);
 			this.loading = false;
-			this.cd.detectChanges();
 		}
   	
 	  	this.gapi.signin2.render('my-signin2', {
@@ -78,7 +75,6 @@ export class InicioComponent implements OnInit {
 			});
 	    },1000);
 	    this.loading = false;
-		this.cd.detectChanges();
 	}
 
 	cambiarUsuario(){
@@ -87,7 +83,7 @@ export class InicioComponent implements OnInit {
 	}
 
 	goDashboard(){
-		this.ngZone.run(() => this.router.navigate(['/dashboard'])).then();
+		this.ngZone.run(() => this.router.navigate(['/dashboard']) ).then();
 	}
 
 }
