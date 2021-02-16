@@ -235,9 +235,9 @@ export class DashboardComponent implements OnInit {
   drawStorageTotalChart(){
 
     let data = {
-      labels: ['En uso','Disponible'],
+      labels: ['Disponible','En uso'],
       datasets: [{
-        data: [this.storageUsage, this.storageLimit-this.storageUsage],
+        data: [this.storageLimit-this.storageUsage, this.storageUsage],
         backgroundColor: ['#EAEAEA','#3FC1C9']
 
       }]
@@ -249,9 +249,9 @@ export class DashboardComponent implements OnInit {
   drawStorageDriveChart(){
 
     let data = {
-      labels: ['En Drive','Otros'],
+      labels: ['Disponible', 'En Drive'],
       datasets: [{
-        data: [this.storageUsageDrive, this.storageLimit-this.storageUsageDrive],
+        data: [this.storageLimit-this.storageUsageDrive, this.storageUsageDrive],
         backgroundColor: ['#EAEAEA','#364F6B']
 
       }]
@@ -263,9 +263,9 @@ export class DashboardComponent implements OnInit {
   drawStorageTrashChart(){
 
     let data = {
-      labels: ['Papelera','Otros'],
+      labels: ['Sin usar','En Papelera'],
       datasets: [{
-        data: [this.storageUsageTrash, this.storageLimit-this.storageUsageTrash],
+        data: [this.storageLimit-this.storageUsageTrash, this.storageUsageTrash],
         backgroundColor: ['#EAEAEA','#FC5185']
 
       }]
