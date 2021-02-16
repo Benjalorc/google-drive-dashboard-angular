@@ -238,7 +238,7 @@ export class DashboardComponent implements OnInit {
       labels: ['En uso','Disponible'],
       datasets: [{
         data: [this.storageUsage, this.storageLimit-this.storageUsage],
-        backgroundColor: ['red','#0000FF']
+        backgroundColor: ['#EAEAEA','#3FC1C9']
 
       }]
     }
@@ -252,7 +252,7 @@ export class DashboardComponent implements OnInit {
       labels: ['En Drive','Otros'],
       datasets: [{
         data: [this.storageUsageDrive, this.storageLimit-this.storageUsageDrive],
-        backgroundColor: ['black','#00FF99']
+        backgroundColor: ['#EAEAEA','#364F6B']
 
       }]
     }
@@ -266,7 +266,7 @@ export class DashboardComponent implements OnInit {
       labels: ['Papelera','Otros'],
       datasets: [{
         data: [this.storageUsageTrash, this.storageLimit-this.storageUsageTrash],
-        backgroundColor: ['black','#3333FF']
+        backgroundColor: ['#EAEAEA','#FC5185']
 
       }]
     }
